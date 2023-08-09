@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Text, View, Button } from "react-native"
+import { Text, View, Button, StyleSheet } from "react-native"
 
 interface Props {
   names: string[]
@@ -41,10 +41,29 @@ export default class SortName extends Component<Props, StateProps> {
 
   render() {
     return (
-      <View>
-        <Text>{this.state.name}</Text>
+      <View style={styles.container}>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>{this.state.name}</Text>
+        </View>
         <Button title="sort" onPress={this.handleShuffleNames} />
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    gap: 8
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: "700",
+    textAlign: "center"
+  },
+  textContainer: {
+    backgroundColor: "#eee",
+    padding: 8,
+    minWidth: 200,
+    borderRadius: 8
+  }
+})
