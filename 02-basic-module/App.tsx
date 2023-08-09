@@ -1,24 +1,22 @@
 import { StatusBar } from "expo-status-bar"
-import { StyleSheet, Text, View } from "react-native"
+import { SafeAreaView, StyleSheet, Text, View } from "react-native"
 import { Main } from "./src/Main"
 import SortName from "./src/components/SortName"
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Main />
-      <SortName names={["Leonardo", "Pedro", "Guilherme", "Kaua"]} />
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 16,
+    // alignItems: "center",
+    // justifyContent: "center",
+    // padding: 16,
     gap: 16
   }
 })
