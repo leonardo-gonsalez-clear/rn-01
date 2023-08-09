@@ -3,6 +3,7 @@ import { Text, View } from "react-native"
 import Img from "./components/Img"
 import Sizes from "./components/Sizes"
 import SortName from "./components/SortName"
+import Form from "./components/Form"
 
 export const Main = () => {
   const uri =
@@ -17,7 +18,8 @@ export const Main = () => {
         style={{ width: 350, height: 200, borderRadius: 4 }}
       /> */}
       {/* <SortName names={["Leonardo", "Pedro", "Guilherme", "Ricardo"]} /> */}
-      <Sizes />
+      {/* <Sizes /> */}
+      <Form />
     </View>
   )
 }
