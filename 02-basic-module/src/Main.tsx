@@ -4,6 +4,7 @@ import Img from "./components/Img"
 import Sizes from "./components/Sizes"
 import SortName from "./components/SortName"
 import Form from "./components/Form"
+import FortuneCookie from "./interfaces/FortuneCookie/FortuneCookie"
 
 export const Main = () => {
   const uri =
@@ -19,7 +20,8 @@ export const Main = () => {
       /> */}
       {/* <SortName names={["Leonardo", "Pedro", "Guilherme", "Ricardo"]} /> */}
       {/* <Sizes /> */}
-      <Form />
+      {/* <Form /> */}
+      <FortuneCookie />
     </View>
   )
 }
