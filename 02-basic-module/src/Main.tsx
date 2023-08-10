@@ -6,6 +6,7 @@ import SortName from "./components/SortName"
 import Form from "./components/Form"
 import FortuneCookie from "./interfaces/FortuneCookie/FortuneCookie"
 import Timer from "./interfaces/Timer/Timer"
+import Scroll from "./components/Scroll"
 
 export const Main = () => {
   const uri =
@@ -23,7 +24,8 @@ export const Main = () => {
       {/* <Sizes /> */}
       {/* <Form /> */}
       {/* <FortuneCookie /> */}
-      <Timer />
+      {/* <Timer /> */}
+      <Scroll />
     </View>
   )
 }
