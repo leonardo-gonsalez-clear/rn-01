@@ -5,6 +5,7 @@ import Sizes from "./components/Sizes"
 import SortName from "./components/SortName"
 import Form from "./components/Form"
 import FortuneCookie from "./interfaces/FortuneCookie/FortuneCookie"
+import Timer from "./interfaces/Timer/Timer"
 
 export const Main = () => {
   const uri =
@@ -21,7 +22,8 @@ export const Main = () => {
       {/* <SortName names={["Leonardo", "Pedro", "Guilherme", "Ricardo"]} /> */}
       {/* <Sizes /> */}
       {/* <Form /> */}
-      <FortuneCookie />
+      {/* <FortuneCookie /> */}
+      <Timer />
     </View>
   )
 }
