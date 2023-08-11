@@ -4,6 +4,7 @@ import FlatListComponent from "./components/FlatListComponent"
 import PickerComponent from "./components/PickerComponent"
 import SliderComponent from "./components/SliderComponent"
 import SwitchComponent from "./components/SwitchComponent"
+import Bank from "./interfaces/Bank"
 
 export default function Main() {
   return (
@@ -11,7 +12,8 @@ export default function Main() {
       {/* <FlatListComponent /> */}
       {/* <PickerComponent /> */}
       {/* <SliderComponent /> */}
-      <SwitchComponent />
+      {/* <SwitchComponent /> */}
+      <Bank />
     </View>
   )
 }

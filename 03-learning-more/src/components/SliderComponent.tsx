@@ -1,8 +1,12 @@
 import { Dimensions, StyleSheet, Text, View } from "react-native"
 import React from "react"
-import Slider from "@react-native-community/slider"
+import Slider, { SliderProps } from "@react-native-community/slider"
 
-export default function SliderComponent() {
+interface Props extends SliderProps {
+  props?: SliderProps
+}
+
+export default function SliderComponent({ ...props }: Props) {
   const [value, setValue] = React.useState(0)
   const [visible, setVisible] = React.useState(false)
 
@@ -10,24 +14,26 @@ export default function SliderComponent() {
 
   return (
     <View style={styles.container}>
-      <Text>SliderComponent</Text>
       <Slider
-        minimumValue={0}
-        maximumValue={100}
-        step={10}
-        onValueChange={(v) => setValue(v)}
-        value={value}
+        minimumValue={100}
+        maximumValue={10000}
         onSlidingStart={() => setVisible(true)}
         onSlidingComplete={() => setVisible(false)}
+        {...props}
       />
       {visible && (
         <Text
           style={[
             styles.text,
-            { left: (value * (screenDimensions.width - 60)) / 100 + 18 }
+            {
+              left:
+                (props.value === undefined
+                  ? 0
+                  : (props.value * (screenDimensions.width - 60)) / 10000) - 25
+            }
           ]}
         >
-          {value}
+          R$ {props.value}
         </Text>
       )}
     </View>
@@ -36,16 +42,16 @@ export default function SliderComponent() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
     flex: 1,
-    padding: 8,
-    gap: 16
+    gap: 16,
+    width: "100%",
+    marginBottom: 10
   },
   text: {
     position: "absolute",
     backgroundColor: "#ddd9",
     fontSize: 16,
-    top: 10,
+    bottom: 10,
     fontWeight: "700",
     textAlign: "center",
     padding: 4,

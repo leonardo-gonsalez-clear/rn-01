@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native"
 import React, { useMemo } from "react"
-import { Picker } from "@react-native-picker/picker"
+import { Picker, PickerItemProps } from "@react-native-picker/picker"
 
 const pizzas = [
   {
@@ -30,41 +30,62 @@ const pizzas = [
   }
 ]
 
-export default function PickerComponent() {
+interface Props {
+  children: React.ReactNode
+  value: number
+  setValue: React.Dispatch<number>
+}
+
+export default function PickerComponent({ children, value, setValue }: Props) {
   const [selectedValue, setSelectedValue] = React.useState(1)
 
   const selectedPizza = pizzas[selectedValue - 1]
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Cardápio de Pizza</Text>
+      {/* <Text style={styles.header}>Cardápio de Pizza</Text> */}
       <View style={styles.content}>
         <Picker
-          selectedValue={selectedValue}
-          onValueChange={(v) => setSelectedValue(v)}
+          selectedValue={value}
+          onValueChange={(v) => setValue(v)}
           placeholder="Selecione"
           mode="dialog"
           style={styles.picker}
         >
-          {pizzas.map((pizza) => (
+          {children}
+          {/* {pizzas.map((pizza) => (
             <Picker.Item key={pizza.id} label={pizza.nome} value={pizza.id} />
-          ))}
+          ))} */}
         </Picker>
-        <Text style={styles.text}>Você selecionou: {selectedPizza.nome}</Text>
-        <Text style={styles.text}>Preço: R$ {selectedPizza.preco}</Text>
+        {/* <Text style={styles.text}>Você selecionou: {selectedPizza.nome}</Text> */}
+        {/* <Text style={styles.text}>Preço: R$ {selectedPizza.preco}</Text> */}
       </View>
     </View>
   )
 }
 
+interface ItemProps extends PickerItemProps {
+  props?: PickerItemProps
+}
+
+export function PickerComponentItem({ ...props }: ItemProps) {
+  return <Picker.Item {...props} />
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    gap: 16
+    gap: 16,
+    width: "100%",
+    marginBottom: 40
   },
   content: {
     gap: 8,
-    padding: 8
+    height: "100%",
+    borderRadius: 4
+    // borderWidth: 1,
+    // borderColor: "#ddd",
+    // borderStyle: "solid"
   },
   header: {
     backgroundColor: "#c54c06",
@@ -74,10 +95,9 @@ const styles = StyleSheet.create({
     color: "#351d0f"
   },
   picker: {
-    backgroundColor: "#eee",
-    borderRadius: 8,
-    fontSize: 24,
-    overflow: "hidden"
+    backgroundColor: "#fff",
+    fontSize: 16,
+    width: "100%"
   },
   text: {
     fontSize: 16
