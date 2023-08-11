@@ -14,7 +14,7 @@ export default function SliderComponent() {
       <Slider
         minimumValue={0}
         maximumValue={100}
-        step={1}
+        step={10}
         onValueChange={(v) => setValue(v)}
         value={value}
         onSlidingStart={() => setVisible(true)}
@@ -24,7 +24,7 @@ export default function SliderComponent() {
         <Text
           style={[
             styles.text,
-            { left: (value * (screenDimensions.width - 60)) / 100 + 20 }
+            { left: (value * (screenDimensions.width - 60)) / 100 + 18 }
           ]}
         >
           {value}
