@@ -6,6 +6,7 @@ import SliderComponent from "./components/SliderComponent"
 import SwitchComponent from "./components/SwitchComponent"
 import Bank from "./interfaces/Bank"
 import Insta from "./interfaces/Insta/Insta"
+import AsyncStorageComponent from "./components/AsyncStorageComponent"
 
 export default function Main() {
   return (
@@ -15,7 +16,8 @@ export default function Main() {
       {/* <SliderComponent /> */}
       {/* <SwitchComponent /> */}
       {/* <Bank /> */}
-      <Insta />
+      {/* <Insta /> */}
+      <AsyncStorageComponent />
     </SafeAreaView>
   )
 }
