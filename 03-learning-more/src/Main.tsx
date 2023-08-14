@@ -7,6 +7,8 @@ import SwitchComponent from "./components/SwitchComponent"
 import Bank from "./interfaces/Bank"
 import Insta from "./interfaces/Insta/Insta"
 import AsyncStorageComponent from "./components/AsyncStorageComponent"
+import ModalComponent from "./components/ModalComponent"
+import BestFuel from "./interfaces/BestFuel"
 
 export default function Main() {
   return (
@@ -17,7 +19,9 @@ export default function Main() {
       {/* <SwitchComponent /> */}
       {/* <Bank /> */}
       {/* <Insta /> */}
-      <AsyncStorageComponent />
+      {/* <AsyncStorageComponent /> */}
+      {/* <ModalComponent /> */}
+      <BestFuel />
     </SafeAreaView>
   )
 }
