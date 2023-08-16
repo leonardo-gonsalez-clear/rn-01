@@ -7,7 +7,7 @@ const HomeLayout = () => {
   return (
     <Tabs
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
         title: "Aplicativo",
         tabBarShowLabel: false,
         tabBarStyle: {
@@ -24,7 +24,7 @@ const HomeLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="settings/index"
+        name="settings"
         options={{
           tabBarIcon: ({ size, color }) => (
             <Ionicons name="analytics" size={size} color={color} />

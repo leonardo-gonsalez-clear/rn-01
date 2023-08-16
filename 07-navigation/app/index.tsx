@@ -6,16 +6,16 @@ export default function Main() {
   const router = useRouter()
 
   const handle = () => {
-    router.push({ pathname: "/pages/home", params: { name: "Leonardo" } })
+    router.push({ pathname: "/pages/home/", params: { name: "Leonardo" } })
   }
 
   return (
     <View style={styles.container}>
       {/* <Stack.Screen options={{ title: "Início" }} /> */}
-      <Link href="/pages/home" style={styles.btn}>
+      <Link href="/pages/home/" style={styles.btn}>
         <Text style={styles.txt}>Ir para home</Text>
       </Link>
-      <Link href="/pages/home/settings" style={styles.btn}>
+      <Link href="/pages/home/settings/" style={styles.btn}>
         <Text style={styles.txt}>Ir para configurações</Text>
       </Link>
       <Button title="avançar" onPress={handle} />
