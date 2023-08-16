@@ -3,6 +3,7 @@ import React from "react"
 import {
   Link,
   Stack,
+  Tabs,
   useLocalSearchParams,
   useNavigation,
   useRouter
@@ -14,25 +15,20 @@ export default function Home() {
   const { name } = useLocalSearchParams()
   const nav = useNavigation()
 
-  React.useLayoutEffect(() => {
-    nav.setOptions({ title: name })
-  }, [name])
+  // React.useLayoutEffect(() => {
+  //   nav.setOptions({ title: name })
+  // }, [name])
 
   const handle = () => {
-    router.push("/")
+    router.back()
   }
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: "Home" }} />
       <Text onPress={() => router.back()} style={styles.txt}>
         Voltar
       </Text>
       <Text>Nome: {name}</Text>
-
-      <Link href={"/pages/settings"}>
-        <Text>Configurações</Text>
-      </Link>
 
       <Button title="Voltar TUDO" onPress={handle} />
     </View>
