@@ -1,16 +1,23 @@
 import { View, Text } from "react-native"
 import React from "react"
 import { Stack } from "expo-router"
+import { Drawer } from "expo-router/drawer"
 
 const Layout = () => {
   return (
-    <Stack
-      screenOptions={{
-        headerStyle: { backgroundColor: "#fff" },
-        headerTitleStyle: { color: "#008cff" },
-        headerShown: false
-      }}
-    />
+    <>
+      {/* <Stack
+        screenOptions={{
+          headerStyle: { backgroundColor: "#fff" },
+          headerTitleStyle: { color: "#008cff" },
+          headerShown: false
+        }}
+      /> */}
+      <Drawer>
+        <Drawer.Screen name="index" options={{ title: "Inicio" }} />
+        <Drawer.Screen name="pages/home" options={{ title: "Home" }} />
+      </Drawer>
+    </>
   )
 }
 

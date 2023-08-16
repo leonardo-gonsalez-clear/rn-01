@@ -11,14 +11,15 @@ export default function Main() {
 
   return (
     <View style={styles.container}>
-      {/* <Stack.Screen options={{ title: "Início" }} /> */}
-      <Link href="/pages/home/" style={styles.btn}>
+      <Link href="/pages/home/" style={styles.btn} asChild>
         <Text style={styles.txt}>Ir para home</Text>
       </Link>
-      <Link href="/pages/home/settings/" style={styles.btn}>
+      {/*
+      <Link href="/pages/home/settings/" style={styles.btn} asChild>
         <Text style={styles.txt}>Ir para configurações</Text>
       </Link>
-      <Button title="avançar" onPress={handle} />
+      <Button title="avançar" onPress={handle} /> */}
+      <Text style={styles.txt}>BEM-VINDO</Text>
     </View>
   )
 }
