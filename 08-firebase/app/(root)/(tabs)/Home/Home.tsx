@@ -2,11 +2,11 @@ import { View, Text, TextInput, Button } from "react-native"
 import React from "react"
 import { Container, Input } from "./Home.styled"
 import { IUser } from ".."
-import { onValue, ref, set, update } from "firebase/database"
+import { onValue, ref, set, update, push } from "firebase/database"
 import database from "../../../../services/firebaseConnection"
 
 const Home = () => {
-  const [userData, setUserData] = React.useState<IUser>({
+  const [userData, setUserData] = React.useState<Partial<IUser>>({
     nome: "",
     idade: ""
   })
@@ -21,20 +21,18 @@ const Home = () => {
     const reference = ref(database, "usuarios")
 
     try {
-      let size
+      // let size
 
-      await onValue(reference, (snapshot) => {
-        size = snapshot.val().length
-      })
+      push(reference, { nome, idade })
 
-      if (!size) throw new Error()
+      // if (!size) throw new Error()
 
-      await update(reference, {
-        [size + 1]: {
-          nome,
-          idade
-        }
-      })
+      // await update(reference, {
+      //   [size + 1]: {
+      //     nome,
+      //     idade
+      //   }
+      // })
 
       alert("Sucesso")
     } catch (e) {
