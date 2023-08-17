@@ -1,6 +1,7 @@
 import firebase, { initializeApp } from "firebase/app"
 import "firebase/database"
 import { getDatabase } from "firebase/database"
+import { getAuth } from "firebase/auth"
 
 const firebaseConfig = {
   apiKey: "AIzaSyD7dtcHBlm7WMn6S2lnv-R1j5SE-ryQCXs",
@@ -13,8 +14,8 @@ const firebaseConfig = {
   databaseURL: "https://react-native-4952f-default-rtdb.firebaseio.com"
 }
 
-const app = initializeApp(firebaseConfig)
+export const app = initializeApp(firebaseConfig)
 
-const database = getDatabase(app)
+export const database = getDatabase(app)
 
-export default database
+export const auth = getAuth(app)

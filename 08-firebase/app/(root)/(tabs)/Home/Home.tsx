@@ -3,13 +3,15 @@ import React from "react"
 import { Container, Input } from "./Home.styled"
 import { IUser } from ".."
 import { onValue, ref, set, update, push } from "firebase/database"
-import database from "../../../../services/firebaseConnection"
+import { database } from "../../../../services/firebaseConnection"
+import { useNavigation, useRouter } from "expo-router"
 
 const Home = () => {
   const [userData, setUserData] = React.useState<Partial<IUser>>({
     nome: "",
     idade: ""
   })
+  const router = useRouter()
 
   const handleInsertUser = async () => {
     console.log(userData)
@@ -35,6 +37,7 @@ const Home = () => {
       // })
 
       alert("Sucesso")
+      router.push("/(root)/(tabs)")
     } catch (e) {
       alert("Erro")
     }

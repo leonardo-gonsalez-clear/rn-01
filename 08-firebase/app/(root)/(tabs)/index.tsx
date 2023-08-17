@@ -1,7 +1,7 @@
 import { View, Text } from "react-native"
 import React from "react"
 import { onValue, ref } from "firebase/database"
-import database from "../../../services/firebaseConnection"
+import { database } from "../../../services/firebaseConnection"
 import { Age, Container, Item, List, Name } from "./index.styled"
 
 export interface IUser {
@@ -16,23 +16,27 @@ const index = () => {
   const getUsers = () => {
     const reference = ref(database, "usuarios")
 
-    onValue(reference, (snapshot) => {
-      const data = snapshot.val()
-      setUsers([])
+    onValue(
+      reference,
+      (snapshot) => {
+        const data = snapshot.val()
+        setUsers([])
 
-      snapshot.forEach((item) => {
-        const user = {
-          id: item.key,
-          nome: item.val().nome,
-          idade: item.val().idade
-        } as IUser
-        console.log(user)
+        snapshot.forEach((item) => {
+          const user = {
+            id: item.key,
+            nome: item.val().nome,
+            idade: item.val().idade
+          } as IUser
+          console.log(user)
 
-        setUsers((prev) => [...prev, user])
-      })
+          setUsers((prev) => [...prev, user])
+        })
 
-      console.log(data)
-    })
+        console.log(data)
+      },
+      { onlyOnce: true }
+    )
   }
 
   React.useEffect(() => {

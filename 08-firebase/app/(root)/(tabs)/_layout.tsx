@@ -24,6 +24,15 @@ const TabsLayout = () => {
           )
         }}
       />
+      <Tabs.Screen
+        name="Registrar/Registrar"
+        options={{
+          title: "Gerenciar",
+          tabBarIcon: ({ color, size }) => (
+            <Octicons name="person-add" size={size} color={color} />
+          )
+        }}
+      />
     </Tabs>
   )
 }
