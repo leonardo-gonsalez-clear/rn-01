@@ -13,7 +13,12 @@ const Layout = () => {
           headerShown: false
         }}
       /> */}
-      <Drawer>
+      <Drawer
+        screenOptions={{
+          drawerStyle: { backgroundColor: "#292929" },
+          drawerInactiveTintColor: "#ddd7"
+        }}
+      >
         <Drawer.Screen name="index" options={{ title: "Inicio" }} />
         <Drawer.Screen name="pages/home" options={{ title: "Home" }} />
       </Drawer>
