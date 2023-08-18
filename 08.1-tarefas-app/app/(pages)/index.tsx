@@ -2,9 +2,9 @@ import { View, Text, Button } from "react-native"
 import React from "react"
 import Input from "../../components/Input/Input"
 import { useUserStore } from "../../stores/useUserStore"
-import { onValue, ref, update } from "firebase/database"
+import { onValue, ref, remove, update } from "firebase/database"
 import { db } from "../../services/firebase"
-import { Container, InputWrapper, Item, List } from "./index.styled"
+import { Container, InputWrapper, Item, ItemText, List } from "./index.styled"
 
 interface IUser {
   id: string
@@ -55,6 +55,14 @@ const index = () => {
     console.log(tasks)
   }
 
+  const removeTask = async (id: string) => {
+    const reference = ref(db, `users/${user.id}/tasks/${id}`)
+
+    await remove(reference)
+
+    setTasks(tasks.filter((task) => task.id !== id))
+  }
+
   return (
     <Container>
       <InputWrapper>
@@ -70,7 +78,8 @@ const index = () => {
       <List>
         {tasks.map((task) => (
           <Item key={task.id}>
-            <Text>{task.title}</Text>
+            <ItemText>{task.title}</ItemText>
+            <Button title="X" onPress={() => removeTask(task.id)} />
           </Item>
         ))}
       </List>
