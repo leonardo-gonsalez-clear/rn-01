@@ -7,12 +7,6 @@ import { createUserWithEmailAndPassword } from "firebase/auth"
 import { ref, set } from "firebase/database"
 import { useRouter } from "expo-router"
 
-export interface IUser {
-  email: string | null
-  password: string | null
-  name: string | null
-}
-
 const Registrar = () => {
   const [userData, setUserData] = React.useState<IUser | null>({
     email: null,
@@ -42,6 +36,8 @@ const Registrar = () => {
       })
 
       alert("usuário criado com sucesso!")
+
+      router.push("/(tabs)/Login/Login")
     } catch (error) {
       alert("algo deu errado")
       console.log(error)

@@ -3,13 +3,15 @@ import React from "react"
 import Input from "../../../components/Input/Input"
 import { Container } from "./Login.styled"
 import { useRouter } from "expo-router"
-import { IUser } from "../Registrar/Registrar"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth, db } from "../../../services/firebase"
+import { useUserStore } from "../../../stores/useUserStore"
 
 type ILoginUser = Pick<IUser, "email" | "password">
 
 const Login = () => {
+  const setUser = useUserStore((state) => state.setUser)
+
   const [userData, setUserData] = React.useState<ILoginUser | null>({
     email: null,
     password: null
@@ -31,6 +33,13 @@ const Login = () => {
       )
 
       alert("usuário logado com sucesso!")
+
+      setUser({
+        id: credentials.user.uid,
+        email: email
+      })
+
+      router.push("/(pages)/")
     } catch (error) {
       alert("algo deu errado")
       console.log(error)

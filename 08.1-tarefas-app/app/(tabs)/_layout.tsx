@@ -1,9 +1,17 @@
 import { View, Text } from "react-native"
 import React from "react"
-import { Tabs } from "expo-router"
+import { Navigator, Redirect, Tabs, useRouter } from "expo-router"
 import { Octicons } from "@expo/vector-icons"
+import { useUserStore } from "../../stores/useUserStore"
 
 const TabsLayout = () => {
+  const router = useRouter()
+  const user = useUserStore((state) => state.user)
+
+  if (user) {
+    return <Redirect href="/(pages)/" />
+  }
+
   return (
     <Tabs
       initialRouteName="Registrar/Registrar"
