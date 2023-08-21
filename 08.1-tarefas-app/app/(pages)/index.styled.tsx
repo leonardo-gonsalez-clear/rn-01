@@ -16,6 +16,16 @@ export const List = styled.ScrollView`
   gap: 8px;
 `
 
+export const EditingWarning = styled.View`
+  gap: 8px;
+  flex-direction: row;
+  align-items: center;
+`
+
+export const TextWarning = styled.Text`
+  color: #ffc400;
+`
+
 export const Item = styled.View`
   padding: 8px 12px;
   border: 1px solid #ddd;

@@ -51,6 +51,7 @@ const Login = () => {
       <Input
         label="Email"
         placeholder="exemplo@exemplo.com"
+        keyboardType="email-address"
         onChangeText={(v) =>
           setUserData((prev) => ({ ...(prev as ILoginUser), email: v }))
         }
@@ -58,6 +59,7 @@ const Login = () => {
       <Input
         label="Senha"
         placeholder="************"
+        secureTextEntry={true}
         onChangeText={(v) =>
           setUserData((prev) => ({ ...(prev as ILoginUser), password: v }))
         }

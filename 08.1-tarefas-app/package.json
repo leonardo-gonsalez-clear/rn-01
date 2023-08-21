@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@styled/typescript-styled-plugin": "^1.0.0",
     "@types/firebase": "^3.2.1",
     "@types/react": "~18.0.14",
     "typescript": "^5.1.3"

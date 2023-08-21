@@ -4,6 +4,7 @@ import styled from "styled-components/native"
 export const Container = styled(View)`
   padding: 12px;
   background-color: #212121;
+  margin-top: 20px;
 `
 
 export const Title = styled.Text`

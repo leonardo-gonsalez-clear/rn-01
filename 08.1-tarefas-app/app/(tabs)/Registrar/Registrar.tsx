@@ -63,6 +63,7 @@ const Registrar = () => {
       <Input
         label="Senha"
         placeholder="************"
+        secureTextEntry={true}
         onChangeText={(v) =>
           setUserData((prev) => ({ ...(prev as IUser), password: v }))
         }
