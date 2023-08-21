@@ -1,9 +1,13 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Slot, SplashScreen, Stack } from 'expo-router';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { useMeUser } from '../mutations/user';
+import { useUserStore } from '../stores/useUserStore';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -17,6 +21,8 @@ export const unstable_settings = {
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+const client = new QueryClient();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -39,10 +45,22 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <QueryClientProvider client={client}>
+      <RootLayoutNav />
+    </QueryClientProvider>
+  );
 }
 
+
 function RootLayoutNav() {
+  const query = useMeUser()
+  const user = useUserStore(state => state.user)
+
+
+  React.useEffect(() => {
+    console.log(user?.balance)
+  }, [user])
 
   return (
     <Slot />
