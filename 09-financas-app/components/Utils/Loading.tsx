@@ -1,9 +1,13 @@
-import { View, Text, ActivityIndicator } from 'react-native'
+import { View, Text, ActivityIndicator, ActivityIndicatorProps } from 'react-native'
 import React from 'react'
 
-const Loading = () => {
+interface Props extends ActivityIndicatorProps {
+  props?: ActivityIndicatorProps
+}
+
+const Loading = ({ ...props }: Props) => {
   return (
-    <ActivityIndicator color={"#fff"} size={20} />
+    <ActivityIndicator color={"#212121"} size={20} {...props} />
   )
 }
 

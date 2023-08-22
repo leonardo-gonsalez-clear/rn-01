@@ -2,6 +2,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
+import { View } from 'react-native';
 import { Slot, SplashScreen, Stack } from 'expo-router';
 import React, { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
@@ -12,6 +13,7 @@ import index from './(login)';
 import HomeLayout from './(home)/_layout';
 import LoginLayout from "./(login)/_layout"
 import { Redirect } from 'expo-router';
+import Loading from '../components/Utils/Loading';
 
 
 export {
@@ -45,9 +47,9 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
-  if (!loaded) {
-    return null;
-  }
+  // if (!loaded) {
+  //   return null;
+  // }
 
   return (
     <QueryClientProvider client={client}>
@@ -67,7 +69,11 @@ function RootLayoutNav() {
     me.mutate()
   }, [])
 
-
+  if (me.isLoading) return (
+    <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
+      <Loading size={32} />
+    </View>
+  )
 
   return (
     <Slot />

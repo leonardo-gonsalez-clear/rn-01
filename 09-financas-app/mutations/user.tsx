@@ -56,6 +56,8 @@ export const useMeUser = () => {
     mutationKey: "meUser",
     mutationFn: async () => {
       const token = await AsyncStorage.getItem("token")
+      if (!token) Promise.reject("token not found")
+
       const data = await api.get("/me", { headers: { Authorization: `Bearer ${token}` } }).then(res => res.data)
 
       return data

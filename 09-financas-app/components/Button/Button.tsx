@@ -13,8 +13,12 @@ interface IButtonProps extends TouchableOpacityProps {
 const Button = ({ children, loading, ...props }: IButtonProps) => {
   return (
     <ButtonRoot {...props} >
-      <ButtonText>{loading ? <Loading />
-        : children}</ButtonText>
+      <ButtonText>{
+        loading
+          ? <Loading color={"#fff"} />
+          : children
+      }
+      </ButtonText>
     </ButtonRoot>
   )
 }
