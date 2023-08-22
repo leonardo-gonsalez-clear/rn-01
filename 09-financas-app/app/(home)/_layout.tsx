@@ -24,8 +24,24 @@ export default function TabLayout() {
   if (!isLogged) return <Redirect href="/(login)" />
 
   return (
-    <Drawer>
-      <Drawer.Screen name="index" />
+    <Drawer screenOptions={{
+      headerShown: false,
+
+      drawerStyle: {
+        backgroundColor: "#fff",
+        paddingTop: 20
+      },
+
+      drawerActiveBackgroundColor: "#3b3dbf",
+      drawerActiveTintColor: "#fff",
+
+      drawerInactiveBackgroundColor: "#fff",
+      drawerInactiveTintColor: "#212121"
+    }}>
+      <Drawer.Screen name="index" redirect={true} />
+      <Drawer.Screen name="Home/Home" />
+      <Drawer.Screen name="Registrar/Registrar" />
+      <Drawer.Screen name="Perfil/Perfil" />
     </Drawer>
 
   );
