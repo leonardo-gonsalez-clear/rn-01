@@ -16,7 +16,7 @@ export const useCreateUser = () => {
       await api.post("/users", data).then(res => res.data)
     },
     onSuccess: () => {
-      console.log("usuario criado com sucesso")
+      console.debug("usuario criado com sucesso")
     }
   })
 
@@ -41,7 +41,7 @@ export const useLoginUser = () => {
       })
     },
     onSuccess: () => {
-      console.log("usuario logado com sucesso")
+      console.debug("usuario logado com sucesso")
       me.mutate()
     }
   })
@@ -63,11 +63,57 @@ export const useMeUser = () => {
       return data
     },
     onSuccess: (data) => {
-      console.log("dados do usuário obtidos com sucesso")
-      console.log(data)
+      console.debug("dados do usuário obtidos com sucesso")
       setUser(data)
     }
   })
 
   return query
+}
+
+interface IGetBalance {
+  date: string
+}
+
+export const useGetBalance = () => {
+  const mutation = useMutation<IBalance[], unknown, IGetBalance>({
+    mutationKey: "createUser",
+    mutationFn: async (data: IGetBalance) => {
+
+      const token = await AsyncStorage.getItem("token")
+      if (!token) Promise.reject("token not found")
+
+      return await api.get("/balance", { headers: { Authorization: `Bearer ${token}` }, data }).then(res => res.data)
+    },
+    onSuccess: () => {
+      console.debug("saldo obtido com sucesso")
+    }
+  })
+
+  return mutation
+}
+
+interface IPostReceive {
+  description: string
+  value: number
+  date: string
+  type: "receita" | "despesa"
+}
+
+export const usePostReceive = () => {
+  const mutation = useMutation({
+    mutationKey: "createUser",
+    mutationFn: async (data: IPostReceive) => {
+
+      const token = await AsyncStorage.getItem("token")
+      if (!token) Promise.reject("token not found")
+
+      await api.post("/receive", data, { headers: { Authorization: `Bearer ${token}` } }).then(res => res.data)
+    },
+    onSuccess: () => {
+      console.debug("registrado com sucesso")
+    }
+  })
+
+  return mutation
 }

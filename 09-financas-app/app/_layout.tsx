@@ -14,6 +14,7 @@ import HomeLayout from './(home)/_layout';
 import LoginLayout from "./(login)/_layout"
 import { Redirect } from 'expo-router';
 import Loading from '../components/Utils/Loading';
+import { StatusBar } from 'expo-status-bar';
 
 
 export {
@@ -53,6 +54,7 @@ export default function RootLayout() {
 
   return (
     <QueryClientProvider client={client}>
+      <StatusBar />
       <RootLayoutNav />
     </QueryClientProvider>
   );
