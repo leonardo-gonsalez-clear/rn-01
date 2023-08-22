@@ -1,8 +1,13 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { Stack } from 'expo-router'
+import { useUserStore } from '../../stores/useUserStore'
+import { Redirect } from 'expo-router'
 
 const Layout = () => {
+  const isLogged = useUserStore(state => state.isLogged)
+
+  if (isLogged) return <Redirect href="/(home)" />
   return (
     <Stack initialRouteName='Login/index' screenOptions={{ contentStyle: { padding: 16 } }}>
       <Stack.Screen name='index' redirect={true} />

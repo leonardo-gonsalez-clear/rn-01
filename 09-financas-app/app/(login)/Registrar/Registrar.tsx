@@ -6,7 +6,7 @@ import Button from '../../../components/Button'
 import { useCreateUser } from '../../../mutations/user'
 
 const Registrar = () => {
-  const { mutate } = useCreateUser()
+  const { mutate, isLoading } = useCreateUser()
   const [userData, setUserData] = React.useState({
     name: '',
     email: '',
@@ -15,7 +15,8 @@ const Registrar = () => {
 
 
   const handleCreateUser = () => {
-    console.log(userData)
+
+    if (!userData.name || !userData.email || !userData.password) return alert("Preencha todos os campos")
 
     mutate(userData, {
       onError: (error) => {
@@ -28,7 +29,7 @@ const Registrar = () => {
       <Input label="Nome" placeholder='Digite seu nome' onChangeText={(t) => setUserData(prev => ({ ...prev, name: t }))} />
       <Input label="Email" placeholder='exemplo@email.com' onChangeText={(t) => setUserData(prev => ({ ...prev, email: t }))} />
       <Input label="Senha" placeholder='************' onChangeText={(t) => setUserData(prev => ({ ...prev, password: t }))} />
-      <Button onPress={handleCreateUser}>Criar conta</Button>
+      <Button onPress={handleCreateUser} loading={isLoading}>Criar conta</Button>
     </Container>
   )
 }

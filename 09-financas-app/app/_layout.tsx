@@ -8,6 +8,11 @@ import { useColorScheme } from 'react-native';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { useMeUser } from '../mutations/user';
 import { useUserStore } from '../stores/useUserStore';
+import index from './(login)';
+import HomeLayout from './(home)/_layout';
+import LoginLayout from "./(login)/_layout"
+import { Redirect } from 'expo-router';
+
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -16,7 +21,6 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -54,13 +58,16 @@ export default function RootLayout() {
 
 
 function RootLayoutNav() {
-  const query = useMeUser()
+  const me = useMeUser()
   const user = useUserStore(state => state.user)
+  const isLogged = useUserStore(state => state.isLogged)
 
 
   React.useEffect(() => {
-    console.log(user?.balance)
-  }, [user])
+    me.mutate()
+  }, [])
+
+
 
   return (
     <Slot />

@@ -2,16 +2,19 @@ import { View, Text, TouchableOpacityProps } from 'react-native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { ButtonRoot, ButtonText } from './Button.styled'
+import Loading from '../Utils/Loading'
 
 interface IButtonProps extends TouchableOpacityProps {
   props?: TouchableOpacityProps
+  loading?: boolean
   children: React.ReactNode
 }
 
-const Button = ({ children, ...props }: IButtonProps) => {
+const Button = ({ children, loading, ...props }: IButtonProps) => {
   return (
     <ButtonRoot {...props} >
-      <ButtonText>{children}</ButtonText>
+      <ButtonText>{loading ? <Loading />
+        : children}</ButtonText>
     </ButtonRoot>
   )
 }

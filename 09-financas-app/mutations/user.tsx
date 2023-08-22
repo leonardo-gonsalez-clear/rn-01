@@ -29,6 +29,7 @@ interface ILoginUser {
 }
 
 export const useLoginUser = () => {
+  const me = useMeUser()
   const mutation = useMutation({
     mutationKey: "loginUser",
     mutationFn: async (data: ILoginUser) => {
@@ -39,6 +40,10 @@ export const useLoginUser = () => {
         return res.data
       })
     },
+    onSuccess: () => {
+      console.log("usuario logado com sucesso")
+      me.mutate()
+    }
   })
 
   return mutation
@@ -47,9 +52,9 @@ export const useLoginUser = () => {
 
 export const useMeUser = () => {
   const setUser = useUserStore(state => state.setUser)
-  const query = useQuery({
-    queryKey: "meUser",
-    queryFn: async () => {
+  const query = useMutation({
+    mutationKey: "meUser",
+    mutationFn: async () => {
       const token = await AsyncStorage.getItem("token")
       const data = await api.get("/me", { headers: { Authorization: `Bearer ${token}` } }).then(res => res.data)
 
