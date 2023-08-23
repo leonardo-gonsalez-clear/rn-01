@@ -11,10 +11,11 @@ export const BalanceList = styled.ScrollView`
 
 export const BalanceItem = styled.View`
   margin-right: 12px;
-  width: 200px;
+  width: 250px;
   height: 100px;
   padding: 10px;
   border-radius: 4px;
+  justify-content: center;
 `
 
 export const BalanceItemText = styled.Text`
