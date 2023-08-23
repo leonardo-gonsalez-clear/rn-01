@@ -77,7 +77,7 @@ interface IGetBalance {
 
 export const useGetBalance = () => {
   const mutation = useMutation<IBalance[], unknown, IGetBalance>({
-    mutationKey: "createUser",
+    mutationKey: "getUserBalance",
     mutationFn: async (data: IGetBalance) => {
 
       const token = await AsyncStorage.getItem("token")
@@ -102,13 +102,13 @@ interface IPostReceive {
 
 export const usePostReceive = () => {
   const mutation = useMutation({
-    mutationKey: "createUser",
+    mutationKey: "postReceive",
     mutationFn: async (data: IPostReceive) => {
 
       const token = await AsyncStorage.getItem("token")
       if (!token) Promise.reject("token not found")
 
-      await api.post("/receive", data, { headers: { Authorization: `Bearer ${token}` } }).then(res => res.data)
+      return await api.post("/receive", data, { headers: { Authorization: `Bearer ${token}` } }).then(res => res.data)
     },
     onSuccess: () => {
       console.debug("registrado com sucesso")
