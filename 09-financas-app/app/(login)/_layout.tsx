@@ -9,7 +9,14 @@ const Layout = () => {
 
   if (isLogged) return <Redirect href="/(home)" />
   return (
-    <Stack initialRouteName='Login/index' screenOptions={{ contentStyle: { padding: 16 } }}>
+    <Stack
+      initialRouteName='Login/index'
+      screenOptions={{
+        contentStyle: {
+          padding: 16,
+          backgroundColor: "#FaF4FF"
+        }
+      }}>
       <Stack.Screen name='index' redirect={true} />
       <Stack.Screen name='Login/index' options={{
         headerShown: false,

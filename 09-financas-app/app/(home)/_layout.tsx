@@ -14,7 +14,7 @@ export default function TabLayout() {
     <Drawer screenOptions={{
       headerShown: false,
       sceneContainerStyle: {
-        backgroundColor: "#fff",
+        backgroundColor: "#FaF4FF",
         paddingHorizontal: 10
       },
 
@@ -30,9 +30,9 @@ export default function TabLayout() {
       drawerInactiveTintColor: "#212121"
     }}>
       <Drawer.Screen name="index" redirect={true} />
-      <Drawer.Screen name="Home/Home" />
-      <Drawer.Screen name="Registrar/Registrar" />
-      <Drawer.Screen name="Perfil/Perfil" />
+      <Drawer.Screen name="Home/Home" options={{ title: "Home" }} />
+      <Drawer.Screen name="Registrar/Registrar" options={{ title: "Registrar" }} />
+      <Drawer.Screen name="Perfil/Perfil" options={{ title: "Perfil" }} />
     </Drawer>
 
   );

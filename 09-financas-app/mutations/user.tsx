@@ -93,7 +93,7 @@ export const useGetBalance = () => {
   return mutation
 }
 
-interface IPostReceive {
+export interface IPostReceive {
   description: string
   value: number
   date: string

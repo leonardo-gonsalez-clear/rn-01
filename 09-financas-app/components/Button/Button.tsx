@@ -8,11 +8,13 @@ interface IButtonProps extends TouchableOpacityProps {
   props?: TouchableOpacityProps
   loading?: boolean
   children: React.ReactNode
+  icon?: React.ReactNode
 }
 
-const Button = ({ children, loading, ...props }: IButtonProps) => {
+const Button = ({ children, icon, loading, ...props }: IButtonProps) => {
   return (
     <ButtonRoot {...props} >
+      {icon}
       <ButtonText>{
         loading
           ? <Loading color={"#fff"} />
