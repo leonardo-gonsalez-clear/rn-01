@@ -4,7 +4,9 @@ import Header from '../../../interfaces/Header'
 import { useGetBalance } from '../../../mutations/user'
 import { format } from 'date-fns'
 import { useIsFocused } from '@react-navigation/native'
-import { BalanceItem, BalanceItemText, BalanceItemValue, BalanceList, Container } from './Home.styled'
+import { BalanceItem, BalanceItemText, BalanceItemValue, BalanceList, Container, Recieves, RecievesItem, RecievesItemType, RecievesItemTypeText, RecievesItemValue, RecievesList, RecievesTitle, RecievesTitleText } from './Home.styled'
+import { useGetRecives } from '../../../queries/user'
+import { Octicons } from '@expo/vector-icons'
 
 const cardColors = {
   'receita': '#12A454',
@@ -16,10 +18,13 @@ const Home = () => {
   const balance = useGetBalance()
   const today = new Date()
   const isFocused = useIsFocused()
+  const recives = useGetRecives()
 
   React.useEffect(() => {
     balance.mutate({ date: format(today, "dd/MM/yyyy") },
       { onSuccess: (data) => console.log(data) })
+
+    recives.refetch()
   }, [isFocused])
 
   return (
@@ -41,7 +46,29 @@ const Home = () => {
         )
         )}
       </BalanceList>
-    </Container>
+
+      <Recieves>
+        <RecievesTitle>
+          <Octicons name="calendar" size={24} color="black" />
+          <RecievesTitleText>Últimas movimentações</RecievesTitleText>
+        </RecievesTitle>
+
+        <RecievesList contentContainerStyle={{ gap: 10 }}>
+          {recives?.data?.map((item) => (
+            <RecievesItem key={item.id}>
+              <RecievesItemType
+                style={{ backgroundColor: cardColors[item.type] }}>
+                <Octicons color="#fff" name={item.type === "despesa" ? "arrow-down" : "arrow-up"} size={18} />
+                <RecievesItemTypeText>
+                  {item.type}
+                </RecievesItemTypeText>
+              </RecievesItemType>
+              <RecievesItemValue>R$ {item.value.toFixed(2)}</RecievesItemValue>
+            </RecievesItem>
+          ))}
+        </RecievesList>
+      </Recieves>
+    </Container >
   )
 }
 

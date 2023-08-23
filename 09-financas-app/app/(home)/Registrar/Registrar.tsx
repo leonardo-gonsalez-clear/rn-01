@@ -69,7 +69,7 @@ const Registrar = () => {
           placeholder='R$ x.xxx,xx'
           keyboardType='numeric'
           onChangeText={(v) => setData(prev => ({ ...prev, value: Number(v.replace(",", ".")) }))}
-          value={data.value ? data.value.toString() : ""}
+          value={data.value ? data.value : ""}
         />
       </InputWrapper>
 
