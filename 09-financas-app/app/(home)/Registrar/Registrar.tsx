@@ -11,7 +11,7 @@ import { useRouter } from 'expo-router'
 
 interface IData {
   description: string
-  value: number
+  value: string
   type: "receita" | "despesa" | null
   date: string
 }
@@ -19,7 +19,7 @@ interface IData {
 const Registrar = () => {
   const [data, setData] = React.useState<IData>({
     description: "",
-    value: 0,
+    value: "",
     type: null,
     date: format(new Date, "dd/MM/yyyy")
   })
@@ -34,7 +34,7 @@ const Registrar = () => {
 
     if (!data.type) return alert("Selecione o tipo de movimentação")
 
-    mutation.mutate(data as IPostReceive, {
+    mutation.mutate({ ...data, value: Number(data.value) } as IPostReceive, {
       onSuccess: (data) => {
         alert(
           `Movimentação registrada com sucesso!
@@ -45,7 +45,7 @@ const Registrar = () => {
         setData(prev => ({
           ...prev,
           description: "",
-          value: 0,
+          value: "",
           type: null
         }))
 
@@ -68,8 +68,8 @@ const Registrar = () => {
           label="Valor desejado"
           placeholder='R$ x.xxx,xx'
           keyboardType='numeric'
-          onChangeText={(v) => setData(prev => ({ ...prev, value: Number(v.replace(",", ".")) }))}
-          value={data.value ? data.value : ""}
+          onChangeText={(v) => setData(prev => ({ ...prev, value: v.replace(",", ".") }))}
+          value={data.value}
         />
       </InputWrapper>
 

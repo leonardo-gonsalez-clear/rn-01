@@ -1,12 +1,13 @@
-import { View, Text } from 'react-native'
+import { View, Text, Alert, GestureResponderEvent } from 'react-native'
 import React from 'react'
 import Header from '../../../interfaces/Header'
-import { useGetBalance } from '../../../mutations/user'
+import { useDeleteReceive } from '../../../mutations/user'
 import { format } from 'date-fns'
 import { useIsFocused } from '@react-navigation/native'
 import { BalanceItem, BalanceItemText, BalanceItemValue, BalanceList, Container, Recieves, RecievesItem, RecievesItemType, RecievesItemTypeText, RecievesItemValue, RecievesList, RecievesTitle, RecievesTitleText } from './Home.styled'
-import { useGetRecives } from '../../../queries/user'
+import { useGetBalance, useGetRecives } from '../../../queries/user'
 import { Octicons } from '@expo/vector-icons'
+import { GestureEvent, LongPressGestureHandlerGestureEvent } from 'react-native-gesture-handler'
 
 const cardColors = {
   'receita': '#12A454',
@@ -16,17 +17,26 @@ const cardColors = {
 
 const Home = () => {
   const balance = useGetBalance()
-  const today = new Date()
   const isFocused = useIsFocused()
   const recives = useGetRecives()
+  const deleteReceive = useDeleteReceive()
 
   React.useEffect(() => {
-    balance.mutate({ date: format(today, "dd/MM/yyyy") },
-      { onSuccess: (data) => console.log(data) })
-
+    balance.refetch()
     recives.refetch()
-  }, [isFocused])
+  }, [isFocused, deleteReceive.isSuccess])
 
+  const handleDelete = (item_id: string) => {
+    Alert.alert("Deletar", "Deseja realmente deletar esta movimentação?", [
+      {
+        text: "Sim",
+        onPress: () => deleteReceive.mutate({ item_id })
+      },
+      {
+        text: "Não",
+      }
+    ])
+  }
   return (
     <Container>
       <Header title="Minhas movimentações" />
@@ -55,7 +65,7 @@ const Home = () => {
 
         <RecievesList contentContainerStyle={{ gap: 10 }}>
           {recives?.data?.map((item) => (
-            <RecievesItem key={item.id}>
+            <RecievesItem key={item.id} onLongPress={() => handleDelete(item.id)} activeOpacity={0.7}>
               <RecievesItemType
                 style={{ backgroundColor: cardColors[item.type] }}>
                 <Octicons color="#fff" name={item.type === "despesa" ? "arrow-down" : "arrow-up"} size={18} />

@@ -36,3 +36,26 @@ export const useGetRecives = () => {
 
   return query
 }
+
+interface IGetBalance {
+  date: string
+}
+
+export const useGetBalance = () => {
+  const mutation = useQuery<IBalance[]>({
+    queryKey: "getUserBalance",
+    queryFn: async () => {
+      const date = format(new Date, "dd/MM/yyyy")
+      const token = await AsyncStorage.getItem("token")
+      if (!token) Promise.reject("token not found")
+
+      return await api.get("/balance", { headers: { Authorization: `Bearer ${token}` }, data: { date } }).then(res => res.data)
+    },
+    onSuccess: () => {
+      console.debug("saldo obtido com sucesso")
+    }
+  })
+
+  return mutation
+}
+

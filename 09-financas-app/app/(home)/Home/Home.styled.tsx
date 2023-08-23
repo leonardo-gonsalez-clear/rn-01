@@ -1,3 +1,4 @@
+import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import styled from "styled-components/native"
 
 export const Container = styled.View`
@@ -53,7 +54,7 @@ height: 400px;
 justify-self: start;
 `
 
-export const RecievesItem = styled.View`
+export const RecievesItem = styled.TouchableOpacity`
 background-color: #eee;
 border-radius: 4px;
 padding: 10px;

@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "react-query";
 import api from "../services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useUserStore } from "../stores/useUserStore";
+import { AxiosError } from "axios";
 
 interface ICreateUser {
   name: string
@@ -71,27 +72,6 @@ export const useMeUser = () => {
   return query
 }
 
-interface IGetBalance {
-  date: string
-}
-
-export const useGetBalance = () => {
-  const mutation = useMutation<IBalance[], unknown, IGetBalance>({
-    mutationKey: "getUserBalance",
-    mutationFn: async (data: IGetBalance) => {
-
-      const token = await AsyncStorage.getItem("token")
-      if (!token) Promise.reject("token not found")
-
-      return await api.get("/balance", { headers: { Authorization: `Bearer ${token}` }, data }).then(res => res.data)
-    },
-    onSuccess: () => {
-      console.debug("saldo obtido com sucesso")
-    }
-  })
-
-  return mutation
-}
 
 export interface IPostReceive {
   description: string
@@ -117,3 +97,32 @@ export const usePostReceive = () => {
 
   return mutation
 }
+
+interface IDeleteReceive {
+  item_id: string
+}
+export const useDeleteReceive = () => {
+  const mutation = useMutation({
+    mutationKey: "deleteReceive",
+    mutationFn: async (data: IDeleteReceive) => {
+
+      const token = await AsyncStorage.getItem("token")
+      if (!token) Promise.reject("token not found")
+
+      return await api.delete("/receives/delete", { params: { item_id: data.item_id }, headers: { Authorization: `Bearer ${token}` } }).then(res => res.data)
+    },
+    onSuccess: () => {
+      console.debug("registro deletado com sucesso")
+    },
+    onError: (e) => {
+      console.debug("erro ao deletar registro")
+      if (e instanceof AxiosError) {
+        console.log(e.response)
+
+      }
+    }
+  })
+
+  return mutation
+}
+
