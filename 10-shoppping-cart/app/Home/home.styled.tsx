@@ -20,6 +20,11 @@ align-items: center;
 margin: 16px 0;
 `
 
+export const CartIcon = styled.TouchableOpacity`
+flex-direction: row;
+align-items: center;
+`
+
 export const ProductList = styled(FlatList<IProduct>)``
 
 export const ProductItem = styled.View`

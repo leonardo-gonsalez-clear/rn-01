@@ -45,6 +45,7 @@ interface IProductsStore {
   setProducts: (products: IProduct[]) => void;
   cart: ICartItem[];
   setCart: (cart: ICartItem[]) => void;
+  addItemToCart: (product: ICartItem) => void;
 
 }
 
@@ -52,5 +53,6 @@ export const useProductsStore = create<IProductsStore>((set) => ({
   products: data,
   setProducts: (products) => set({ products }),
   cart: [],
-  setCart: (cart) => set({ cart })
+  setCart: (cart) => set({ cart }),
+  addItemToCart: (item) => set((state) => ({ cart: [...state.cart, item] })),
 }));
