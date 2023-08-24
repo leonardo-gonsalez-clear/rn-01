@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import api from "../services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { format } from "date-fns";
+import { useUserStore } from "../stores/useUserStore";
 
 interface IGetReceive {
   description: string
@@ -12,13 +13,16 @@ interface IGetReceive {
 }
 
 export const useGetRecives = () => {
+  const date = useUserStore(state => state.date)
+
   const query = useQuery<IGetReceive[]>({
-    queryKey: "getRecives",
+    queryKey: ["getRecives", date],
     queryFn: async () => {
+      console.log(date)
       const token = `Bearer ${await AsyncStorage.getItem("token")}`
       const res = await api.get("/receives", {
         headers: { Authorization: token },
-        data: { date: format(new Date, "dd/MM/yyyy") }
+        params: { date }
       })
         .then(res => res.data)
       return res
@@ -42,14 +46,16 @@ interface IGetBalance {
 }
 
 export const useGetBalance = () => {
+  const date = useUserStore(state => state.date)
+
   const mutation = useQuery<IBalance[]>({
-    queryKey: "getUserBalance",
+    queryKey: ["getUserBalance", date],
     queryFn: async () => {
-      const date = format(new Date, "dd/MM/yyyy")
+      console.log(date)
       const token = await AsyncStorage.getItem("token")
       if (!token) Promise.reject("token not found")
 
-      return await api.get("/balance", { headers: { Authorization: `Bearer ${token}` }, data: { date } }).then(res => res.data)
+      return await api.get("/balance", { headers: { Authorization: `Bearer ${token}` }, params: { date } }).then(res => res.data)
     },
     onSuccess: () => {
       console.debug("saldo obtido com sucesso")

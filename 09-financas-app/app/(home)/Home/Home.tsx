@@ -1,13 +1,14 @@
-import { View, Text, Alert, GestureResponderEvent } from 'react-native'
+import { Alert, Modal, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Header from '../../../interfaces/Header'
 import { useDeleteReceive } from '../../../mutations/user'
-import { format } from 'date-fns'
 import { useIsFocused } from '@react-navigation/native'
 import { BalanceItem, BalanceItemText, BalanceItemValue, BalanceList, Container, Recieves, RecievesItem, RecievesItemType, RecievesItemTypeText, RecievesItemValue, RecievesList, RecievesTitle, RecievesTitleText } from './Home.styled'
 import { useGetBalance, useGetRecives } from '../../../queries/user'
 import { Octicons } from '@expo/vector-icons'
-import { GestureEvent, LongPressGestureHandlerGestureEvent } from 'react-native-gesture-handler'
+import CalendarModal, { useCalendarModal } from '../../../interfaces/CalendarModal/CalendarModal'
+import { format } from 'date-fns'
+import { useUserStore } from '../../../stores/useUserStore'
 
 const cardColors = {
   'receita': '#12A454',
@@ -20,11 +21,18 @@ const Home = () => {
   const isFocused = useIsFocused()
   const recives = useGetRecives()
   const deleteReceive = useDeleteReceive()
+  const toggleModal = useCalendarModal(state => state.toggle)
+  const visible = useCalendarModal(state => state.visible)
+  const date = useUserStore(state => state.date)
 
   React.useEffect(() => {
     balance.refetch()
     recives.refetch()
   }, [isFocused, deleteReceive.isSuccess])
+
+  React.useEffect(() => {
+    console.log(`################### ${date}`)
+  }, [date])
 
   const handleDelete = (item_id: string) => {
     Alert.alert("Deletar", "Deseja realmente deletar esta movimentação?", [
@@ -59,7 +67,9 @@ const Home = () => {
 
       <Recieves>
         <RecievesTitle>
-          <Octicons name="calendar" size={24} color="black" />
+          <TouchableOpacity onPress={toggleModal}>
+            <Octicons name="calendar" size={24} color="black" />
+          </TouchableOpacity>
           <RecievesTitleText>Últimas movimentações</RecievesTitleText>
         </RecievesTitle>
 
@@ -78,6 +88,10 @@ const Home = () => {
           ))}
         </RecievesList>
       </Recieves>
+
+      <Modal animationType='fade' visible={visible} transparent>
+        <CalendarModal />
+      </Modal>
     </Container >
   )
 }

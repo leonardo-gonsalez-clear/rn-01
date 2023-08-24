@@ -3,6 +3,7 @@ import styled from "styled-components/native"
 
 export const Container = styled.View`
 gap: 20px;
+flex: 1
 `
 
 export const BalanceList = styled.ScrollView`
@@ -11,7 +12,7 @@ export const BalanceList = styled.ScrollView`
 
 export const BalanceItem = styled.View`
   margin-right: 12px;
-  width: 250px;
+  width: 300px;
   height: 100px;
   padding: 10px;
   border-radius: 4px;
