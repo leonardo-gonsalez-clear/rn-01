@@ -55,8 +55,33 @@ export default function TabOneScreen() {
           await schedulePushNotification();
         }}
       />
+      <Button
+        title="Press to get all notifications"
+        onPress={async () => {
+          await getAllNotifications();
+        }}
+      />
+
+      <Button
+        title="Press to cancel all notifications"
+        onPress={async () => {
+          await cancelAllNotifications();
+        }
+        }
+      />
+
     </View>
   );
+}
+
+
+const getAllNotifications = async () => {
+  const notifications = await Notifications.getAllScheduledNotificationsAsync()
+  console.log('getAllNotifications', notifications.map(n => n.identifier))
+}
+
+const cancelAllNotifications = async () => {
+  await Notifications.cancelAllScheduledNotificationsAsync()
 }
 
 async function schedulePushNotification() {
@@ -66,7 +91,7 @@ async function schedulePushNotification() {
       body: 'Here is the notification body',
       data: { data: 'goes here' },
     },
-    trigger: { seconds: 2 },
+    trigger: { seconds: 60 },
   });
 }
 
