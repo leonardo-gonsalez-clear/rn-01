@@ -70,6 +70,15 @@ export default function TabOneScreen() {
         }
       />
 
+      <Button
+        title="Press to schedule a weekly notification"
+        onPress={async () => {
+          await scheduleWeeklyNotification();
+        }
+        }
+      />
+
+
     </View>
   );
 }
@@ -93,6 +102,18 @@ async function schedulePushNotification() {
     },
     trigger: { seconds: 60 },
   });
+}
+
+const scheduleWeeklyNotification = async () => {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "You've got mail! 📬",
+      body: 'Here is the notification body',
+      data: { data: 'goes here' },
+    },
+    trigger: { minute: 44, hour: 10, weekday: 1, repeats: true },
+  })
+
 }
 
 async function registerForPushNotificationsAsync() {
