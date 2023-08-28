@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { Button, Image, Modal, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Camera, CameraType, CameraPictureOptions } from 'expo-camera'
 import { useFocusEffect } from '@react-navigation/native';
@@ -9,6 +9,8 @@ const CameraDevice = () => {
   const [hasPermission, setHasPermission] = Camera.useCameraPermissions()
   const [isCameraReady, setIsCameraReady] = React.useState(false)
   const [isFocused, setIsFocused] = React.useState(false)
+  const [photo, setPhoto] = React.useState<string | null>(null)
+  const cameraRef = React.useRef<Camera>(null)
 
 
   const onCameraReady = () => {
@@ -18,19 +20,12 @@ const CameraDevice = () => {
   }
 
   const takePicture = async () => {
-    if (!isCameraReady) {
-      return
-    }
+    if (!isCameraReady || !cameraRef.current) return
 
-    const options: CameraPictureOptions = {
-      quality: 0.5,
-      base64: true,
-      skipProcessing: true,
-      onPictureSaved: (data) => {
-        console.log(data)
-      }
-    }
+    const photo = await cameraRef.current.takePictureAsync({ quality: 0.5 })
+    console.log(photo)
 
+    setPhoto(photo.uri)
   }
 
   React.useEffect(() => {
@@ -71,12 +66,26 @@ const CameraDevice = () => {
 
   if (!isFocused) return
   return (
-    <View style={{ flex: 1, position: "absolute", zIndex: 100, width: "100%", height: "100%" }}>
-      <Camera type={cameraType} style={{ flex: 1 }} onCameraReady={onCameraReady}  >
+    <View style={{ flex: 1, position: "absolute", zIndex: 100, height: "100%", width: "100%" }}>
+      <Camera type={cameraType} style={{ flex: 1, width: "100%", height: "100%" }} ratio="16:9" onCameraReady={onCameraReady} ref={cameraRef}  >
 
-        <Button title='teste' onPress={takePicture} />
 
       </Camera>
+      <Button title='Tirar Foto' onPress={takePicture} />
+      <Button title='switch camera' onPress={() => setCameraType(cameraType === CameraType.front ? CameraType.back : CameraType.front)} />
+
+      {photo && <Modal visible={Boolean(photo)}>
+
+        <View style={{ flex: 1, backgroundColor: "black", justifyContent: "center", alignItems: "center", gap: 20 }}>
+
+          <Image source={{ uri: photo }} style={{ width: 250, height: 400, objectFit: "contain", borderRadius: 50, borderColor: "#fff", borderWidth: 1 }} />
+
+          <Button title='close' onPress={() => setPhoto(null)} />
+
+        </View>
+
+      </Modal>
+      }
     </View>
   )
 }
