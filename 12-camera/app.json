@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "12-camera",
+    "name": "elefante arabe",
     "slug": "12-camera",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,7 +22,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.leeool.elefantearabe"
     },
     "web": {
       "bundler": "metro",
@@ -34,12 +39,20 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Permite que $(productName) use a câmera do seu dispositivo",
+          "cameraPermission": "Permite que $(productName) use a câmera do seu dispositivo"
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "1bdb6da4-3279-415b-a912-ca0d88efd77c"
+      }
     }
   }
 }
