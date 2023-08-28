@@ -2,7 +2,7 @@ import { Button, Image, Modal, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Camera, CameraType, CameraPictureOptions } from 'expo-camera'
 import { useFocusEffect } from '@react-navigation/native';
-import { launchImageLibraryAsync, useMediaLibraryPermissions } from 'expo-image-picker';
+import { ImagePickerOptions, MediaTypeOptions, launchImageLibraryAsync, useMediaLibraryPermissions } from 'expo-image-picker';
 import { saveToLibraryAsync } from 'expo-media-library';
 
 
@@ -48,7 +48,17 @@ const CameraDevice = () => {
   }
 
   const handleImageLibrary = async () => {
-    await launchImageLibraryAsync()
+    const options: ImagePickerOptions = {
+      mediaTypes: MediaTypeOptions.Images,
+      selectionLimit: 1
+    }
+    const res = await launchImageLibraryAsync(options)
+
+    if (res.canceled || !res.assets.length) {
+      return alert('canceled')
+    }
+
+    setPhoto(res.assets[0].uri)
   }
 
   React.useEffect(() => {
