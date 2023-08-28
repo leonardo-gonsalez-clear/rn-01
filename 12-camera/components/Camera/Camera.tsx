@@ -2,11 +2,14 @@ import { Button, Image, Modal, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Camera, CameraType, CameraPictureOptions } from 'expo-camera'
 import { useFocusEffect } from '@react-navigation/native';
+import { launchImageLibraryAsync, useMediaLibraryPermissions } from 'expo-image-picker';
+import { saveToLibraryAsync } from 'expo-media-library';
 
 
 const CameraDevice = () => {
   const [cameraType, setCameraType] = React.useState(CameraType.front)
   const [hasPermission, setHasPermission] = Camera.useCameraPermissions()
+  const [mediaPermission, requestMediaPermission] = useMediaLibraryPermissions()
   const [isCameraReady, setIsCameraReady] = React.useState(false)
   const [isFocused, setIsFocused] = React.useState(false)
   const [photo, setPhoto] = React.useState<string | null>(null)
@@ -26,6 +29,26 @@ const CameraDevice = () => {
     console.log(photo)
 
     setPhoto(photo.uri)
+  }
+
+  const savePicture = async () => {
+    if (!isCameraReady || !cameraRef.current || !photo) return
+
+    if (!mediaPermission || !mediaPermission.granted) {
+      await requestMediaPermission()
+    } else if (!mediaPermission.granted) {
+      return alert('no media permission')
+    }
+
+    saveToLibraryAsync(photo)
+    setPhoto(null)
+
+    alert('saved')
+
+  }
+
+  const handleImageLibrary = async () => {
+    await launchImageLibraryAsync()
   }
 
   React.useEffect(() => {
@@ -73,6 +96,7 @@ const CameraDevice = () => {
       </Camera>
       <Button title='Tirar Foto' onPress={takePicture} />
       <Button title='switch camera' onPress={() => setCameraType(cameraType === CameraType.front ? CameraType.back : CameraType.front)} />
+      <Button title='media' onPress={handleImageLibrary} />
 
       {photo && <Modal visible={Boolean(photo)}>
 
@@ -81,6 +105,8 @@ const CameraDevice = () => {
           <Image source={{ uri: photo }} style={{ width: 250, height: 400, objectFit: "contain", borderRadius: 50, borderColor: "#fff", borderWidth: 1 }} />
 
           <Button title='close' onPress={() => setPhoto(null)} />
+
+          <Button title='save' onPress={savePicture} />
 
         </View>
 
