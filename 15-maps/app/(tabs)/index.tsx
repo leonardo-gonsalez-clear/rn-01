@@ -2,6 +2,7 @@ import { Button, StyleSheet } from 'react-native';
 import { Text, View } from '../../components/Themed';
 import MapView, { MapPressEvent, Marker } from 'react-native-maps';
 import React from 'react';
+import * as Location from "expo-location"
 
 export default function TabOneScreen() {
   const [loc, setLoc] = React.useState({
@@ -11,6 +12,7 @@ export default function TabOneScreen() {
     longitudeDelta: 0.0421,
   })
   const [markers, setMarkers] = React.useState<typeof loc[]>([])
+  const [status, requestPermission] = Location.useForegroundPermissions()
 
   const handleLoc1 = () => {
     setLoc((p) => ({ ...p, latitude: -23.5613991, longitude: -46.7307891 }))
@@ -37,11 +39,31 @@ export default function TabOneScreen() {
     console.log(nativeEvent.coordinate.longitude)
   }
 
+  React.useEffect(() => {
+    (async () => {
+      if (!(status?.granted)) {
+        const res = await requestPermission()
+        console.log(res)
+      }
+
+    })()
+  }, [])
+
+  const goToPosition = async () => {
+    const { coords } = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High, timeInterval: 0 })
+
+    setLoc((p) => ({ ...p, latitude: coords.latitude, longitude: coords.longitude }))
+
+    console.log(coords)
+
+  }
+
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row", gap: 10, position: 'absolute', top: 0, left: 0, zIndex: 100 }}>
         <Button title="Loc 1" onPress={handleLoc1} />
         <Button title="Loc 2" onPress={handleLoc2} />
+        <Button title="°" onPress={goToPosition} />
         <Text>{loc.latitude.toFixed(2)} | {loc.longitude.toFixed(2)}</Text>
       </View>
       <MapView
@@ -51,6 +73,8 @@ export default function TabOneScreen() {
         style={styles.map}
         initialRegion={loc}
         region={loc}
+        showsUserLocation={true}
+        loadingEnabled={true}
       >
         <Marker coordinate={{ latitude: 21.97456, longitude: -78.21212 }} title='Cuba' description='País da América Latina' />
         {markers.map((marker) => (
