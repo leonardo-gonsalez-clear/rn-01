@@ -1,6 +1,6 @@
 import { Button, StyleSheet } from 'react-native';
 import { Text, View } from '../../components/Themed';
-import MapView, { MapPressEvent, Marker } from 'react-native-maps';
+import MapView, { Callout, MapPressEvent, Marker } from 'react-native-maps';
 import React from 'react';
 import * as Location from "expo-location"
 
@@ -78,7 +78,11 @@ export default function TabOneScreen() {
       >
         <Marker coordinate={{ latitude: 21.97456, longitude: -78.21212 }} title='Cuba' description='País da América Latina' />
         {markers.map((marker) => (
-          <Marker key={marker.longitude + marker.latitude} coordinate={marker} />
+          <Marker key={marker.longitude + marker.latitude} coordinate={marker}>
+            <Callout tooltip={true}>
+              <Text style={{ backgroundColor: "#fff7", padding: 4, fontSize: 16, borderRadius: 2 }}>Latitude: {marker.latitude.toFixed(2)}</Text>
+            </Callout>
+          </Marker>
         ))}
 
       </MapView>
